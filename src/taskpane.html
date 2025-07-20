@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="taskpane.css">
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <title>Application</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>抽獎小工具</h1>
+        </div>
+        <div class="tab-container">
+            <div class="tab-box">
+                <div id="run-tab" class="tab-item active">
+                    <div class="tab-title active">
+                        <h4>抽獎</h4>
+                    </div>
+                    <div class="tab-content active">
+                        <div class="content-box">
+                            <div class="content-item">
+                                <p class="vibrate-1">按下向方按鈕開始抽獎~</p>
+                            </div>
+                            <div class="content-item">
+                                <button id="run" class="btn">
+                                    <span>開始抽獎！！</span>
+                                </button>
+                                <div id="run-loader" class="run-loader fade"></div>
+                            </div>
+                        </div>
+                        <div class="content-box">
+                            <div class="content-item">
+                                <p><span class="title-tab-text">抽獎池內數量:</span><span id="lottery-pool-count"
+                                        class="sp-text"></span>
+                                    筆</p>
+                            </div>
+                            <div class="content-item">
+                                <p><span class="title-tab-text">本次抽獎預估:</span><span id="lottery-time"
+                                        class="sp-text"></span>
+                                    秒</p>
+                            </div>
+                            <div class="content-item">
+                                <p id="msg-info-box" class="sp-text msg-info shake-horizontal">
+                                    <span id="msg-info"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="edit-tab" class="tab-item">
+                    <div class="tab-title">
+                        <h4>編輯</h4>
+                    </div>
+                    <div class="tab-content">
+                        <div class="content-box col-1">
+                            <div class="content-item">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>編號</th>
+                                            <th>地區</th>
+                                            <th>店面</th>
+                                            <th>客戶姓名</th>
+                                            <th>訂購編號</th>
+                                            <th>編輯</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="win-data">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="settings-tab" class="tab-item">
+                    <div class="tab-title">
+                        <h4>設定</h4>
+                    </div>
+                    <div class="tab-content">
+                        <div class="content-box">
+                            <div class="content-item">
+                                <h5>讀取資料</h5>
+                            </div>
+                            <div class="content-item">
+                                <label for="worksheet-name">工作表　: </label>
+                                <input type="text" id="worksheet-name" placeholder="資料工作表" value="總表">
+                                <span class="ex-msg">範例: <span>總表</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="data-for">資料範圍: </label>
+                                <input type="text" id="data-for" placeholder="開始" style="width: 5.9em;" value="A1">
+                                <span>：</span>
+                                <input type="text" id="data-to" placeholder="結束" style="width: 5.9em;" value="E200">
+                                <span class="ex-msg">範例: <span>A1:E100</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="primary-key-col">主鍵欄位: </label>
+                                <input type="text" id="primary-key-col" placeholder="欄位" value="訂購編號">
+                                <span class="ex-msg">範例: <span>訂單編號</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="status-col">狀態欄位: </label>
+                                <input type="text" id="status-col" placeholder="欄位" value="狀態">
+                                <span class="ex-msg">範例: <span>狀態</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="exclusion-status">排除狀態: </label>
+                                <input type="text" id="exclusion-status" placeholder="狀態代號" value="-1,1,2">
+                                <span class="ex-msg">範例: <span>-1,1,2</span></span>
+                            </div>
+                            <div class="content-item">
+                                <h5>設定資料內容</h5>
+                            </div>
+                            <div class="content-item">
+                                <label for="repeat-count">重複次數: </label>
+                                <input type="number" id="repeat-count" placeholder="重複次數" value="1" min="1">
+                                <span class="ex-msg">範例: <span>3</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="is-random">是否隨機: </label>
+                                <input type="checkbox" id="is-random" placeholder="true / false" checked>
+                                <span class="ex-msg">範例: <span>true</span></span>
+                            </div>
+                            <div class="content-item">
+                                <h5>抽獎畫面</h5>
+                            </div>
+                            <div class="content-item">
+                                <label for="lottery-views">工作表　: </label>
+                                <input type="text" id="lottery-views" placeholder="顯示抽獎工作表" value="抽獎畫面">
+                                <span class="ex-msg">範例: <span>抽獎畫面</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="interval-ms">間隔時間: </label>
+                                <input type="number" id="interval-ms" placeholder="間隔毫秒數" value="45">
+                                <span class="ex-msg">範例: <span>45</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="show-position">顯示位置: </label>
+                                <input type="text" id="show-position" placeholder="欄位代號" value="D8:D8">
+                                <span class="ex-msg">範例: <span>D8:D8</span></span>
+                            </div>
+                            <div class="content-item">
+                                <h5>抽獎結果</h5>
+                            </div>
+                            <div class="content-item">
+                                <label for="write-status-views">工作表　: </label>
+                                <input type="text" id="write-status-views" placeholder="狀態工作表" value="總表">
+                                <span class="ex-msg">範例: <span>總表</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="new-status">抽出狀態: </label>
+                                <input type="text" id="new-status" placeholder="抽出後狀態值" value="1">
+                                <span class="ex-msg">範例: <span>1</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="write-history-views">工作表　: </label>
+                                <input type="text" id="write-history-views" placeholder="抽獎紀錄工作表" value="抽獎畫面">
+                                <span class="ex-msg">範例: <span>抽獎畫面</span></span>
+                            </div>
+                            <div class="content-item">
+                                <label for="write-history-position">寫入位置: </label>
+                                <input type="text" id="write-history-position" placeholder="抽獎紀錄範圍" value="C17:F21">
+                                <span class="ex-msg">範例: <span>C17:F21</span></span>
+                            </div>
+                            <div class="content-item">
+                                <button class="settings-btn">確認</button>
+                                <button class="settings-btn">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

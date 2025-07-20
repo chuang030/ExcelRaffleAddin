@@ -1,0 +1,551 @@
+* {
+    box-sizing : border-box;
+    margin     : 0;
+    padding    : 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+input[type="checkbox"] {
+    margin             : 0;
+    -webkit-user-select: none;
+    -ms-user-select    : none;
+    user-select        : none;
+    appearance         : none;
+    cursor             : pointer;
+}
+
+:root {
+    --windows-max-width: 650px;
+    --windows-min-width: 500px;
+
+    --border-secondary-color : #cbe1ee;
+    --border-primary-color   : #5ebed6;
+    --text-color             : #0d476a;
+    --background-color       : #f6fbfe;
+    --active-background-color: #0d476a;
+    --transition-ms          : 180ms;
+
+    --button-primary-color: #5ebed6;
+}
+
+.fade {
+    opacity   : 0;
+    transition: opacity var(--transition-ms) ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+}
+
+.container {
+    height          : 100vh;
+    background-color: var(--background-color);
+}
+
+.header {
+    color        : var(--text-color);
+    margin-bottom: 20px;
+    text-align   : center;
+    max-width    : var(--windows-max-width);
+}
+
+button {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    padding         : 10px 20px;
+    text-align      : center;
+    cursor          : pointer;
+    border-radius   : 30px;
+    background-color: var(--button-primary-color);
+    color           : white;
+    border          : var(--border-primary-color) 1px solid;
+    transition      : all var(--transition-ms) ease-in-out;
+}
+
+button:hover {
+    background-color: var(--active-background-color);
+    border          : var(--active-background-color) 1px solid;
+    transition      : all var(--transition-ms) ease-in-out;
+}
+
+.tab-box {
+    display  : flex;
+    flex-wrap: nowrap;
+    margin   : 0 20px;
+    min-width: var(--windows-min-width);
+    max-width: var(--windows-max-width);
+    position : relative;
+}
+
+.tab-box .tab-item {
+    margin             : 0 5px;
+    padding            : 3px;
+    text-align         : center;
+    cursor             : pointer;
+    -webkit-user-select: none;
+    -ms-user-select    : none;
+    user-select        : none;
+}
+
+.tab-title {
+    width              : 120px;
+    margin-bottom      : 20px;
+    padding            : 5px 20px;
+    color              : var(--text-color);
+    border             : var(--border-secondary-color) 1px solid;
+    border-radius      : 30px;
+    transition         : all var(--transition-ms) ease-in-out;
+    position           : relative;
+    -webkit-user-select: none;
+    -ms-user-select    : none;
+    user-select        : none;
+}
+
+.tab-title:hover {
+    color     : var(--border-primary-color);
+    border    : var(--border-primary-color) 1px solid;
+    transition: all var(--transition-ms) ease-in-out;
+}
+
+.tab-title.active {
+    color           : white;
+    border          : var(--active-background-color) 1px solid;
+    background-color: var(--active-background-color);
+    cursor          : default;
+    transition      : all var(--transition-ms) ease-in-out;
+}
+
+.tab-title.active::after {
+    content     : '';
+    display     : block;
+    border-style: solid;
+    border-width: 6px 6px 0 6px;
+    border-color: var(--active-background-color) transparent transparent transparent;
+    position    : absolute;
+    left        : 50%;
+    margin-left : -6px;
+    top         : 100%;
+}
+
+.tab-title.active:hover {
+    border          : var(--border-primary-color) 1px solid;
+    background-color: var(--border-primary-color);
+    transition      : all var(--transition-ms) ease-in-out;
+}
+
+.tab-box .tab-item .tab-content {
+    position     : absolute;
+    top          : 60px;
+    left         : 5px;
+    padding      : 20px;
+    width        : 97.5%;
+    min-width    : var(--windows-min-width);
+    max-width    : var(--windows-max-width);
+    height       : 70vh;
+    border       : var(--border-secondary-color) 1px solid;
+    border-radius: 30px;
+    cursor       : default;
+    display      : none;
+}
+
+.tab-box .tab-item .tab-content.active {
+    display  : flex;
+    flex-wrap: wrap;
+}
+
+.tab-box .tab-item .tab-content .content-box {
+    width     : 50%;
+    text-align: start;
+}
+
+.tab-box .tab-item .tab-content .content-box .content-item {
+    margin-bottom  : 15px;
+    display        : flex;
+    justify-content: center;
+}
+
+.title-tab-text {
+    width  : 7em;
+    display: inline-block;
+}
+
+#run {
+    position: absolute;
+    top     : 80px;
+}
+
+.sp-text {
+    width  : 4em;
+    color  : var(--border-primary-color);
+    display: inline-block;
+}
+
+.msg-info {
+    margin-top      : 5px;
+    width           : 80%;
+    border-radius   : 30px;
+    text-align      : center;
+    background-color: transparent;
+    transition      : all var(--transition-ms) ease-in-out;
+    display         : none;
+}
+
+.msg-info.active {
+    display: block;
+}
+
+.error-text {
+    padding         : 15px 20px;
+    border-radius   : 30px;
+    text-align      : center;
+    color           : rgb(244, 94, 91);
+    background-color: #FCEBEB;
+    display         : block;
+}
+
+.warn-text {
+    padding         : 15px 20px;
+    border-radius   : 30px;
+    text-align      : center;
+    color           : rgb(236, 153, 52);
+    background-color: #FEF6D5;
+    display         : block;
+}
+
+#edit-tab>.tab-content .content-box {
+    width   : 100%;
+    height  : 100%;
+    overflow: hidden;
+}
+
+#edit-tab>.tab-content .content-box .content-item {
+    height        : 100%;
+    padding-bottom: 0;
+    overflow      : scroll;
+}
+
+#edit-tab>.tab-content .content-box .content-item::-webkit-scrollbar {
+    width : 6px;
+    height: 80%;
+}
+
+#edit-tab>.tab-content .content-box .content-item::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#edit-tab>.tab-content .content-box .content-item::-webkit-scrollbar-thumb {
+    background   : var(--border-primary-color);
+    border-radius: 10px;
+}
+
+#edit-tab>.tab-content .content-box .content-item::-webkit-scrollbar-thumb:hover {
+    background: var(--active-background-color);
+}
+
+
+
+#edit-tab>.tab-content .content-box .content-item table {
+    width         : 100%;
+    border-spacing: 0px;
+    text-align    : center;
+    color         : var(--text-color);
+    overflow      : scroll;
+}
+
+#edit-tab>.tab-content .content-box .content-item table tr {
+    margin-bottom  : 7px;
+    padding        : 0px;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : baseline;
+}
+
+#edit-tab>.tab-content .content-box .content-item table tr th {
+    position: sticky;
+    top     : 0;
+}
+
+#edit-tab>.tab-content .content-box .content-item table th,
+#edit-tab>.tab-content .content-box .content-item table td {
+    display            : inline-block;
+    -webkit-user-select: text;
+    -ms-user-select    : text;
+    user-select        : text;
+    cursor             : auto;
+}
+
+#edit-tab>.tab-content .content-box .content-item table th:nth-of-type(1),
+#edit-tab>.tab-content .content-box .content-item table td:nth-of-type(1) {
+    width: calc(100% / 10 * 1);
+}
+
+#edit-tab>.tab-content .content-box .content-item table th:nth-of-type(2),
+#edit-tab>.tab-content .content-box .content-item table td:nth-of-type(2) {
+    width: calc(100% / 10 * 1);
+}
+
+#edit-tab>.tab-content .content-box .content-item table th:nth-of-type(3),
+#edit-tab>.tab-content .content-box .content-item table td:nth-of-type(3) {
+    width: calc(100% / 10 * 2);
+}
+
+#edit-tab>.tab-content .content-box .content-item table th:nth-of-type(4),
+#edit-tab>.tab-content .content-box .content-item table td:nth-of-type(4) {
+    width: calc(100% / 10 * 2);
+}
+
+#edit-tab>.tab-content .content-box .content-item table th:nth-of-type(5),
+#edit-tab>.tab-content .content-box .content-item table td:nth-of-type(5) {
+    width: calc(100% / 10 * 2);
+}
+
+#edit-tab>.tab-content .content-box .content-item table th:nth-of-type(6),
+#edit-tab>.tab-content .content-box .content-item table td:nth-of-type(6) {
+    width          : calc(100% / 10 * 1.5);
+    display        : flex;
+    justify-content: center;
+}
+
+#edit-tab>.tab-content .content-box .content-item table .edit-btn {
+    padding            : 1px 10px;
+    -webkit-user-select: none;
+    -ms-user-select    : none;
+    user-select        : none;
+}
+
+#settings-tab>.tab-content .content-box {
+    width     : 100%;
+    height    : 100%;
+    overflow  : scroll;
+    text-align: start;
+    color     : var(--text-color);
+}
+
+#settings-tab>.tab-content .content-box .content-item {
+    align-items: center;
+}
+
+#settings-tab>.tab-content .content-box .content-item h5 {
+    margin-right  : 20px;
+    padding-bottom: 10px;
+    width         : 100%;
+    font-size     : 1em;
+    border-bottom : var(--border-secondary-color) 1px solid;
+}
+
+#settings-tab>.tab-content .content-box .content-item label {
+    font-size: 0.9em;
+    padding  : 5px;
+}
+
+#settings-tab>.tab-content .content-box .content-item span {
+    font-size: 0.9em;
+    padding  : 5px;
+}
+
+#settings-tab>.tab-content .content-box .content-item input {
+    height          : 2.1em;
+    padding         : 0 5px;
+    border-radius   : 15px;
+    border          : var(--border-secondary-color) 1px solid;
+    background-color: var(--background-color);
+    color           : var(--text-color);
+    transition      : all var(--transition-ms) ease-in-out;
+}
+
+#settings-tab>.tab-content .content-box .content-item input:focus {
+    outline: var(--border-primary-color) 1px solid;
+}
+
+#settings-tab>.tab-content .content-box .content-item input[type="checkbox"] {
+    margin-left     : 2px;
+    margin-right    : 132px;
+    width           : 3.5em;
+    height          : 1.75em;
+    background-color: white;
+    border          : var(--border-secondary-color) 1px solid;
+    border-radius   : 25px;
+    display         : flex;
+    align-items     : center;
+}
+
+#settings-tab>.tab-content .content-box .content-item input[type="checkbox"]::before {
+    content         : "";
+    margin-left     : 1px;
+    width           : 15px;
+    height          : 15px;
+    display         : block;
+    background-color: var(--border-primary-color);
+    border-radius   : 100%;
+    transition      : all ease 250ms;
+}
+
+#settings-tab>.tab-content .content-box .content-item input[type="checkbox"]:checked {
+    background-color: var(--border-primary-color);
+}
+
+#settings-tab>.tab-content .content-box .content-item input[type="checkbox"]:checked::before {
+    content         : "";
+    transform       : translateX(calc(1em + 4px));
+    background-color: white;
+    transition      : all ease 250ms;
+}
+
+#settings-tab>.tab-content .content-box .content-item .ex-msg {
+    margin-left        : 15px;
+    color              : var(--button-primary-color);
+    -webkit-user-select: text;
+    -ms-user-select    : text;
+    user-select        : text;
+}
+
+#settings-tab>.tab-content .content-box .content-item {
+    justify-content: start;
+}
+
+#settings-tab>.tab-content .content-box .content-item:last-of-type {
+    justify-content: center;
+}
+
+#settings-tab>.tab-content .content-box .content-item .settings-btn {
+    padding: 5px 10px;
+    margin : 0 10px;
+}
+
+#settings-tab>.tab-content .content-box::-webkit-scrollbar {
+    width : 6px;
+    height: 80%;
+}
+
+#settings-tab>.tab-content .content-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#settings-tab>.tab-content .content-box::-webkit-scrollbar-thumb {
+    background   : var(--border-primary-color);
+    border-radius: 10px;
+}
+
+#settings-tab>.tab-content .content-box::-webkit-scrollbar-thumb:hover {
+    background: var(--active-background-color);
+}
+
+.vibrate-1 {
+    animation: vibrate-1 0.3s linear infinite both;
+}
+
+@keyframes vibrate-1 {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-2px, 2px);
+    }
+
+    40% {
+        transform: translate(-2px, -2px);
+    }
+
+    60% {
+        transform: translate(2px, 2px);
+    }
+
+    80% {
+        transform: translate(2px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.shake-horizontal {
+    animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+@keyframes shake-horizontal {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70% {
+        transform: translateX(-10px);
+    }
+
+    20%,
+    40%,
+    60% {
+        transform: translateX(10px);
+    }
+
+    80% {
+        transform: translateX(8px);
+    }
+
+    90% {
+        transform: translateX(-8px);
+    }
+}
+
+.run-loader {
+    width   : 60px;
+    height  : 20px;
+    display : -ms-grid;
+    display : grid;
+    color   : #046D8B;
+    position: absolute;
+    top     : 80px;
+
+    display         : -ms-grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+}
+
+.run-loader:before,
+.run-loader:after {
+    content          : "";
+    grid-area        : 1/1;
+    --c              : #0000 calc(100%/3), var(--active-background-color) 0 calc(2*100%/3), #0000 0;
+    --c1             : linear-gradient(90deg, var(--c));
+    --c2             : linear-gradient(0deg, var(--c));
+    background       : var(--c1), var(--c2), var(--c1), var(--c2);
+    background-size  : 300% 4px, 4px 300%;
+    background-repeat: no-repeat;
+    animation        : loader-animation 1.5s infinite;
+}
+
+.loader:after {
+    animation-delay: -.75s;
+}
+
+@keyframes loader-animation {
+    0% {
+        background-position: 50% 0, 100% 100%, 0 100%, 0 0
+    }
+
+    25% {
+        background-position: 0 0, 100% 50%, 0 100%, 0 0
+    }
+
+    50% {
+        background-position: 0 0, 100% 0, 50% 100%, 0 0
+    }
+
+    75% {
+        background-position: 0 0, 100% 0, 100% 100%, 0 50%
+    }
+
+    75.01% {
+        background-position: 100% 0, 100% 0, 100% 100%, 0 50%
+    }
+
+    100% {
+        background-position: 50% 0, 100% 0, 100% 100%, 0 100%
+    }
+}
